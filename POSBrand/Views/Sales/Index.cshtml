@@ -1,0 +1,128 @@
+﻿@model PaginatedList<Sale>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+    int serialNo = 0;
+}
+<h2 class="alert alert-info">Sales Record</h2>
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Index" method="get">
+            <div class="form-actions no-color top-buffer">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="text" placeholder="Search.." name="searching" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <input type="submit" value="Search" class="btn btn-primary" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-md-offset-3">
+                        <a href="/Sales/Create" class="btn btn-primary">Create new record</a>
+                    </div>
+
+                    <div class="col-md-2 pull-right">
+                        <div class="form-group">
+                            <a asp-controller="Sales" asp-action="Index" class="btn btn-primary">Back to Full List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        @if (Model.Count() == 0)
+        {
+            <h4>No Record Found</h4>
+        }
+        else
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sl No.</th>
+                        <th>Order No.</th>
+                        <th>Sales Date</th>
+                        <th>Order Refer No.</th>
+                        <th>Client</th>
+                        <th>Tax</th>
+                        <th>Vat</th>
+                        <th>Discount</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        serialNo++;
+                        <tr>
+                            <td>@serialNo</td>
+                            <td>@item.OrderNumber</td>
+                            <td>@item.SalesDate.ToString("dd/MM/yyyy")</td>
+                            <td>@item.OrderRefNo</td>
+                            <td>@item.Customer.Name</td>
+                            <td>@item.TaxAmount</td>
+                            <td>@item.VatAmount</td>
+                            <td>@item.DiscountAmount</td>
+                            <td>@item.TotalAmount</td>
+                            <td>
+                                <button data-toggle="collapse" data-target="#@serialNo" class="btn btn-default"><i class="glyphicon glyphicon-chevron-down"></i></button>
+                                <a href="/Sales/Edit/@item.Id" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+                                <a href="/Sales/Delete/@item.Id" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i></a>
+                            </td>
+                        </tr>
+                        <tr id="@serialNo" class="collapse">
+                            <td colspan="10">
+                                <table class="table table-bordered" style="background-color:#f7f7f7">
+                                    <thead>
+                                        <tr>
+                                            <td>Product</td>
+                                            <td>Quantity</td>
+                                            <td>Unit</td>
+                                            <td>Unit Price</td>
+                                            <td>Sub Total</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var detail in item.SalesDetails)
+                                        {
+                                            <tr>
+                                                <td>@detail.Product.Name</td>
+                                                <td>@detail.Quantity</td>
+                                                <td>@detail.UOM</td>
+                                                <td>@detail.UnitPrice</td>
+                                                <td>@detail.IndividualTotal</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-page="@(Model.PageIndex - 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @prevDisabled">
+            Previous
+        </a>
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-page="@(Model.PageIndex + 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @nextDisabled">
+            Next
+        </a>
+    </div>
+</div>

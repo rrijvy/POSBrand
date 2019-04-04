@@ -35,6 +35,7 @@ namespace POSBrand
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IStockService, StockService>();
 
             services.AddMvc();
         }

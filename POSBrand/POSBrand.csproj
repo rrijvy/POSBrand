@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-POSBrand-EF2ADC4F-CA72-4477-85E9-C515A22EBECD</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20190404094452_Init_Database.cs" />
+    <Compile Remove="Data\Migrations\20190404094452_Init_Database.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
@@ -16,6 +21,31 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.2" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Invoice\PurchaseInvoice.cshtml" />
+    <None Include="Views\Invoice\SalesInvoice.cshtml" />
+    <None Include="Views\Report\CategoryWisePurchaseReport.cshtml" />
+    <None Include="Views\Report\CategoryWiseSalesReport.cshtml" />
+    <None Include="Views\Report\CurrentStockReport.cshtml" />
+    <None Include="Views\Report\DateWisePurchaseReport.cshtml" />
+    <None Include="Views\Report\DateWiseSalesReport.cshtml" />
+    <None Include="Views\Report\DateWiseStockReport.cshtml" />
+    <None Include="Views\Report\GetCategoryWisePurchaseReport.cshtml" />
+    <None Include="Views\Report\GetCategoryWiseSalesReport.cshtml" />
+    <None Include="Views\Report\GetClientWiseReport.cshtml" />
+    <None Include="Views\Report\GetDateWisePurchaseReport.cshtml" />
+    <None Include="Views\Report\GetDateWiseReport.cshtml" />
+    <None Include="Views\Report\GetDateWiseStockReport.cshtml" />
+    <None Include="Views\Report\GetProductWisePurchaseReport.cshtml" />
+    <None Include="Views\Report\GetProductWiseReport.cshtml" />
+    <None Include="Views\Report\GetSupplierWisePurchaseReport.cshtml" />
+    <None Include="Views\Report\PurchaseProductReport.cshtml" />
+    <None Include="Views\Report\Reports.cshtml" />
+    <None Include="Views\Report\SalesClientWiseReport.cshtml" />
+    <None Include="Views\Report\SalesProductWiseReport.cshtml" />
+    <None Include="Views\Report\SupplierWisePurchaseReport.cshtml" />
   </ItemGroup>
 
 </Project>

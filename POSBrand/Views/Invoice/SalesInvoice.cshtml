@@ -1,0 +1,87 @@
+﻿@model Sale
+@{
+    ViewData["Title"] = "SalesInvoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int serialNo = 0;
+    double totalAmount = 0;
+}
+
+<h2 class="alert alert-info">Sales Invoice</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div>
+            <label asp-for="OrderNumber"></label>: @Model.OrderNumber <br>
+            <label asp-for="OrderRefNo"></label>: @Model.OrderRefNo <br>
+            <label asp-for="CustomerId"></label>: @Model.Customer.Name <br>
+            <label asp-for="Customer.Address1"></label>: @Model.Customer.Address1 <br>
+            <label asp-for="SalesDate"></label>: @Model.SalesDate.ToString("dd/MM/yyyy")<br>
+        </div>
+        <hr/>
+        <table class="table table-bordered table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th class="col-md-1">SL No</th>
+                    <th class="col-md-3">Product</th>
+                    <th class="col-md-2">Quantity</th>
+                    <th class="col-md-2">Unit</th>
+                    <th class="col-md-2">Unit Price</th>
+                    <th class="col-md-2 text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.SalesDetails)
+                {
+                    serialNo++;
+                    <tr>
+                        <td>@serialNo</td>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UOM</td>
+                        <td>@item.UnitPrice</td>
+                        <td class="text-right">@item.IndividualTotal</td>
+                    </tr>
+                    totalAmount += item.IndividualTotal;
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">Grand Total</td>
+                    <td align="right">@totalAmount</td>
+                </tr>
+            </tfoot>
+        </table>
+        <table class="table borderless">
+            <tr>
+                <td class="col-md-10 text-right">Tax Amount</td>
+                <td class="col-md-2 text-right">@Html.DisplayFor(model => model.TaxAmount)</td>
+            </tr>
+            <tr>
+                <td class="col-md-10 text-right">Vat Amount</td>
+                <td class="col-md-2 text-right">@Html.DisplayFor(model => model.VatAmount)</td>
+            </tr>
+            <tr>
+                <td class="col-md-10 text-right">Discount Amount</td>
+                <td class="col-md-2 text-right">@Html.DisplayFor(model => model.DiscountAmount)</td>
+            </tr>
+            <tr>
+                <td class="col-md-10 text-right">Total Amount</td>
+                <td class="col-md-2 text-right">@totalAmount</td>
+            </tr>
+            <tr>
+                <td class="col-md-10 text-right">Payment Type</td>
+                <td class="col-md-2 text-right">@Model.PaymentType</td>
+            </tr>
+            <tr>
+                <td class="col-md-10 text-right">Payment Amount</td>
+                <td class="col-md-2 text-right">@Model.PaymentAmount</td>
+            </tr>
+            <tr>
+                <td class="col-md-10 text-right">Due Amount</td>
+                <td class="col-md-2 text-right">@Model.DueAmount</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
